@@ -304,14 +304,14 @@ func (h *Handler) containerInit(pod *corev1.Pod, k8sNamespace string) (corev1.Co
 // because its alias health check depends on the main service to exist.
 const initContainerCommandTpl = `
 {{- if .ConsulCACert}}
-export CONSUL_HTTP_ADDR="https://${HOST_IP}:8501"
+#export CONSUL_HTTP_ADDR="https://${HOST_IP}:8501"
 export CONSUL_GRPC_ADDR="https://${HOST_IP}:8502"
 export CONSUL_CACERT=/consul/connect-inject/consul-ca.pem
 cat <<EOF >/consul/connect-inject/consul-ca.pem
 {{ .ConsulCACert }}
 EOF
 {{- else}}
-export CONSUL_HTTP_ADDR="${HOST_IP}:8500"
+#export CONSUL_HTTP_ADDR="${HOST_IP}:8500"
 export CONSUL_GRPC_ADDR="${HOST_IP}:8502"
 {{- end}}
 
